@@ -1,0 +1,13 @@
+
+spring:
+  application:
+    name: bank-ink
+
+datasource:
+  my-connection:
+    jdbc-url: jdbc:postgresql://localhost:5432/bank_ink
+    username: "walrus"
+    password: "12345"
+    maximum.pool-size: 10
+    pool-name: "bank_ink"
+    auto-commit: true
