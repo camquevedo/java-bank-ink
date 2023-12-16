@@ -1,8 +1,8 @@
-package dev.camquevedo.bankInc.Services.v1.Products;
+package dev.camquevedo.bankInc.Services.v1.Cards.Product;
 
 import dev.camquevedo.bankInc.Models.v1.Product;
 import dev.camquevedo.bankInc.Repositories.v1.Cards.Product.Interfaces.ProductRepositoryInterface;
-import dev.camquevedo.bankInc.Services.v1.Products.Interfaces.ProductServiceInterface;
+import dev.camquevedo.bankInc.Services.v1.Cards.Product.Interfaces.ProductServiceInterface;
 import dev.camquevedo.bankInc.common.APIResponse;
 import dev.camquevedo.bankInc.common.BaseException;
 import org.springframework.http.HttpStatus;
@@ -47,9 +47,15 @@ public class ProductService implements ProductServiceInterface {
                     "product.service.getById" + id
             );
         }
-        return new APIResponse().withStatus(HttpStatus.OK)
-                .withData(repositoryResponse)
-                .withMessage("products.service.getAll");
+        if (repositoryResponse.isPresent()) {
+            return new APIResponse().withStatus(HttpStatus.OK)
+                    .withData(repositoryResponse)
+                    .withMessage("products.service.getAll");
+        } else {
+            return new APIResponse().withStatus(HttpStatus.NOT_FOUND)
+                    .withData(new Product())
+                    .withMessage("products.service.getAll");
+        }
     }
 
     public APIResponse create(Product body) throws BaseException {
@@ -89,7 +95,6 @@ public class ProductService implements ProductServiceInterface {
     }
 
     public APIResponse remove(Long id) throws BaseException {
-        Product newProduct;
         try {
             repository.deleteById(id);
         } catch (Throwable e) {

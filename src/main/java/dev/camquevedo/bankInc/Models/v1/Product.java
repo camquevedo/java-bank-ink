@@ -2,6 +2,8 @@ package dev.camquevedo.bankInc.Models.v1;
 
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "products")
 public class Product {

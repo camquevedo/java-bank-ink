@@ -1,22 +1,21 @@
-package dev.camquevedo.bankInc.Controllers.v1.Cards;
+package dev.camquevedo.bankInc.Controllers.v1.Transactions;
 
-import dev.camquevedo.bankInc.Models.v1.Product;
-import dev.camquevedo.bankInc.Services.v1.Cards.Product.Interfaces.ProductServiceInterface;
+import dev.camquevedo.bankInc.Models.v1.Transaction;
+import dev.camquevedo.bankInc.Services.v1.Transactions.Interfaces.TransactionServiceInterface;
 import dev.camquevedo.bankInc.common.APIResponse;
 import dev.camquevedo.bankInc.common.BaseException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class ProductController {
-    private final ProductServiceInterface service;
+public class TransactionController {
+    private final TransactionServiceInterface service;
 
-    public ProductController(ProductServiceInterface service) {
+    public TransactionController(TransactionServiceInterface service) {
         this.service = service;
     }
 
-    @GetMapping("/product")
+    @GetMapping("/transaction")
     public APIResponse getAll() throws BaseException {
         APIResponse serviceResponse;
         serviceResponse = service.getAll();
@@ -24,17 +23,17 @@ public class ProductController {
             return new APIResponse(
                     serviceResponse.getStatus(),
                     serviceResponse.getData(),
-                    "product.controller.getAll.notFound"
+                    "transaction.controller.getAll.notFound"
             );
         }
         return new APIResponse(
                 serviceResponse.getStatus(),
                 serviceResponse.getData(),
-                "product.controller.getAll.listAll"
+                "transaction.controller.getAll.listAll"
         );
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/transaction/{id}")
     public APIResponse getById(@PathVariable Long id) throws BaseException {
         APIResponse serviceResponse;
         serviceResponse = service.getById(id);
@@ -43,36 +42,36 @@ public class ProductController {
             return new APIResponse(
                     serviceResponse.getStatus(),
                     serviceResponse.getData(),
-                    "product.controller.getById.notFound"
+                    "transaction.controller.getById.notFound"
             );
         }
         return new APIResponse(
                 serviceResponse.getStatus(),
                 serviceResponse.getData(),
-                "product.controller.getById.listById"
+                "transaction.controller.getById.listById"
         );
     }
 
-    @PostMapping("/product")
-    public APIResponse create(@RequestBody Product body) throws BaseException {
+    @PostMapping("/transaction")
+    public APIResponse create(@RequestBody Transaction body) throws BaseException {
         APIResponse serviceResponse;
         serviceResponse = service.create(body);
         if (serviceResponse.getStatus() != HttpStatus.CREATED) {
             return new APIResponse(
                     serviceResponse.getStatus(),
                     serviceResponse.getData(),
-                    "product.controller.create.notFound"
+                    "transaction.controller.create.notFound"
             );
         }
         return new APIResponse(
                 serviceResponse.getStatus(),
                 serviceResponse.getData(),
-                "product.controller.create.created"
+                "transaction.controller.create.created"
         );
     }
 
-    @PutMapping("/product/{id}")
-    public APIResponse update(@PathVariable Long id, @RequestBody Product body) throws BaseException {
+    @PutMapping("/transaction/{id}")
+    public APIResponse update(@PathVariable Long id, @RequestBody Transaction body) throws BaseException {
         APIResponse serviceResponse;
         serviceResponse = service.edit(id, body);
 
@@ -80,17 +79,17 @@ public class ProductController {
             return new APIResponse(
                     serviceResponse.getStatus(),
                     serviceResponse.getData(),
-                    "product.controller.update.notFound"
+                    "transaction.controller.update.notFound"
             );
         }
         return new APIResponse(
                 serviceResponse.getStatus(),
                 serviceResponse.getData(),
-                "product.controller.update.success"
+                "transaction.controller.update.success"
         );
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/transaction/{id}")
     public APIResponse delete(@PathVariable Long id) throws BaseException {
         APIResponse serviceResponse;
         serviceResponse = service.remove(id);
@@ -99,13 +98,13 @@ public class ProductController {
             return new APIResponse(
                     serviceResponse.getStatus(),
                     serviceResponse.getData(),
-                    "product.controller.delete.notFound"
+                    "transaction.controller.delete.notFound"
             );
         }
         return new APIResponse(
                 serviceResponse.getStatus(),
                 serviceResponse.getData(),
-                "product.controller.delete.removed"
+                "transaction.controller.delete.removed"
         );
     }
 }
