@@ -1,9 +1,9 @@
 package dev.camquevedo.bankInc.Models.v1;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "products")
 public class Product {
 
     @Id
@@ -11,7 +11,7 @@ public class Product {
     public long id;
     public String name;
     public long number;
-    
+
     public Product(long id, String name, long number) {
         this.id = id;
         this.name = name;

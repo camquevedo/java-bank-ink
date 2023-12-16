@@ -1,15 +1,15 @@
 package dev.camquevedo.bankInc.Services.v1.Products;
 
 import dev.camquevedo.bankInc.Models.v1.Product;
-import dev.camquevedo.bankInc.Repositories.v1.Cards.Interfaces.ProductRepositoryInterface;
+import dev.camquevedo.bankInc.Repositories.v1.Cards.Product.Interfaces.ProductRepositoryInterface;
 import dev.camquevedo.bankInc.Services.v1.Products.Interfaces.ProductServiceInterface;
 import dev.camquevedo.bankInc.common.APIResponse;
 import dev.camquevedo.bankInc.common.BaseException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements ProductServiceInterface {
@@ -23,6 +23,7 @@ public class ProductService implements ProductServiceInterface {
         List<Product> repositoryResponse;
         try {
             repositoryResponse = repository.findAll();
+//            repositoryResponse = repository.findAll();
         } catch (Throwable e) {
             throw new BaseException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
@@ -35,8 +36,8 @@ public class ProductService implements ProductServiceInterface {
                 .withMessage("products.service.getAll");
     }
 
-    public APIResponse getById(Integer id) throws BaseException {
-        Product repositoryResponse;
+    public APIResponse getById(Long id) throws BaseException {
+        Optional<Product> repositoryResponse;
         try {
             repositoryResponse = repository.findById(id);
         } catch (Throwable e) {
@@ -51,30 +52,53 @@ public class ProductService implements ProductServiceInterface {
                 .withMessage("products.service.getAll");
     }
 
-    public APIResponse create(Product newProduct) throws BaseException {
-        Long productId;
+    public APIResponse create(Product body) throws BaseException {
+        Product newProduct;
         try {
-            productId = repository.save(newProduct);
+            newProduct = repository.save(body);
         } catch (Throwable e) {
             throw new BaseException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     e.getMessage(),
-                    "product.service.create" + newProduct.toString()
+                    "product.service.create" + body.toString()
             );
         }
-        newProduct.setId(productId);
         return new APIResponse().withStatus(HttpStatus.CREATED)
                 .withData(newProduct)
-                .withMessage("products.service.getAll");
+                .withMessage("products.service.create");
     }
 
-    public APIResponse edit(Integer id, Product body) throws BaseException {
+    public APIResponse edit(Long id, Product body) throws BaseException {
+        Product newProduct;
+        try {
+            newProduct = repository.getReferenceById(id);
+            newProduct.setName(body.getName());
+            newProduct.setNumber(body.getNumber());
+
+            newProduct = repository.save(newProduct);
+        } catch (Throwable e) {
+            throw new BaseException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    e.getMessage(),
+                    "product.service.edit" + body.toString()
+            );
+        }
         return new APIResponse().withStatus(HttpStatus.ACCEPTED)
-                .withData(body)
+                .withData(newProduct)
                 .withMessage("products.service.edit");
     }
 
-    public APIResponse remove(Integer id) throws BaseException {
+    public APIResponse remove(Long id) throws BaseException {
+        Product newProduct;
+        try {
+            repository.deleteById(id);
+        } catch (Throwable e) {
+            throw new BaseException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    e.getMessage(),
+                    "product.service.remove" + id
+            );
+        }
         return new APIResponse().withStatus(HttpStatus.OK)
                 .withData(id)
                 .withMessage("products.service.remove");

@@ -15,8 +15,8 @@ public interface ProductServiceInterface {
 
     //public HttpResponse<Object> getAll();
     public APIResponse getAll() throws BaseException;
-    public APIResponse getById(Integer id) throws BaseException;
+    public APIResponse getById(Long id) throws BaseException;
     public APIResponse create(Product body) throws BaseException;
-    public APIResponse edit(Integer id, Product body) throws BaseException;
-    public APIResponse remove(Integer id) throws BaseException;
+    public APIResponse edit(Long id, Product body) throws BaseException;
+    public APIResponse remove(Long id) throws BaseException;
 }
