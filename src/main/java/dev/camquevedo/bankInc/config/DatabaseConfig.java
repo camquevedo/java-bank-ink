@@ -1,4 +1,4 @@
-package dev.camquevedo.bankink.config;
+package dev.camquevedo.bankInc.config;
 
 //import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

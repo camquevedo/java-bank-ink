@@ -1,13 +1,20 @@
 
 spring:
   application:
-    name: bank-ink
+    name: bank-inc
 
 datasource:
   my-connection:
-    jdbc-url: jdbc:postgresql://localhost:5432/bank_ink
-    username: "walrus"
-    password: "12345"
+    jdbc-url: jdbc:mysql://localhost:3306/app_bank_inc
+    username: bankinc
+    password: 54321
     maximum.pool-size: 10
-    pool-name: "bank_ink"
+    pool-name: "bank-inc"
     auto-commit: true
+
+jpa:
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.SQLServerDialect
+  hibernate:
+    ddl-auto: update

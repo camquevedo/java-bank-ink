@@ -1,4 +1,4 @@
-package dev.camquevedo.bankink.Models.v1;
+package dev.camquevedo.bankInc.Models.v1;
 
 public class Status {
 

@@ -1,4 +1,4 @@
-package dev.camquevedo.bankink;
+package dev.camquevedo.bankInc;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package dev.camquevedo.bankink;
+package dev.camquevedo.bankInc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

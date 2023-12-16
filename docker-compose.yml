@@ -1,18 +1,40 @@
 version: '3.8'
 services:
   db:
-    image: postgres:15.2-alpine3.17
+    image: mysql:5.7
+    container_name: db
+    volumes:
+      - ./src/test/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      - POSTGRES_USER=walrus
-      - POSTGRES_PASSWORD=12345
+      MYSQL_USER: bankinc
+      MYSQL_PASSWORD: 54321
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: app_bank_inc
     ports:
-      - '5432:5432'
-    volumes:
-      - ./src/test/resources/db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
-
-  adminer:
-    image: adminer
+      - '3306:3306'
+    networks:
+      - mysql-phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin
     restart: always
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
     ports:
-      - 8081:8080
+      - '8081:80'
+    networks:
+      - mysql-phpmyadmin
+
+networks:
+  mysql-phpmyadmin:
+
+volumes:
+  dbdata:

@@ -1,4 +1,4 @@
-package dev.camquevedo.bankink.Controllers.v1.Health;
+package dev.camquevedo.bankInc.Controllers.v1.Health;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
