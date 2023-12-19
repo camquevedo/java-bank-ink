@@ -9,7 +9,7 @@ import java.time.LocalTime;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
     public String name;
     public long number;
@@ -49,5 +49,13 @@ public class Product {
 
     public void setNumber(long number) {
         this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return "Card [id=" + id
+                + ", name=" + name
+                + ", number=" + number
+                + "]";
     }
 }

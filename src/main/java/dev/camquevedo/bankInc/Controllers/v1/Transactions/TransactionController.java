@@ -1,6 +1,6 @@
 package dev.camquevedo.bankInc.Controllers.v1.Transactions;
 
-import dev.camquevedo.bankInc.Models.v1.Transaction;
+import dev.camquevedo.bankInc.Models.v1.Transactions.Transaction;
 import dev.camquevedo.bankInc.Services.v1.Transactions.Interfaces.TransactionServiceInterface;
 import dev.camquevedo.bankInc.common.APIResponse;
 import dev.camquevedo.bankInc.common.BaseException;

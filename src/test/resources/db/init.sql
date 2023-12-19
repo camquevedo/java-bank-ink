@@ -17,13 +17,14 @@ CREATE TABLE IF NOT EXISTS products (
     deleted_at DATETIME NULL DEFAULT NULL,
     CONSTRAINT products_number_uniq UNIQUE (number)
 );
-INSERT INTO products (number, name) values (1234, 'Visa'), (4321, 'Mastercard'), (1111, 'AMEX'), (2222, 'xv6');
+INSERT INTO products (number, name) values (123456, 'Visa'), (654321, 'Mastercard'), (111111, 'AMEX'), (222222, 'xv6');
 
 CREATE TABLE IF NOT EXISTS cards (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    status INTEGER NOT NULL,
-    number INTEGER NOT NULL,
-    balance INTEGER NOT NULL,
+    status INTEGER NOT NULL DEFAULT 1,
+    product_id INTEGER NOT NULL,
+    number BIGINT NOT NULL,
+    balance INTEGER NOT NULL DEFAULT 0,
     type SMALLINT NOT NULL,
     first_name VARCHAR(64) NOT NULL,
     last_name VARCHAR(64) NOT NULL,
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     status INTEGER NOT NULL,
     type SMALLINT NOT NULL,
+    card_id INTEGER NOT NULL,
     balance INTEGER NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,

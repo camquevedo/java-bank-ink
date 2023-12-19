@@ -15,7 +15,7 @@ import jakarta.persistence.*;
 @Table(name = "statuses")
 public class Status {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
     public String name;
 

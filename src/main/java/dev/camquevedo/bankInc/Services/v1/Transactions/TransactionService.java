@@ -1,6 +1,6 @@
 package dev.camquevedo.bankInc.Services.v1.Transactions;
 
-import dev.camquevedo.bankInc.Models.v1.Transaction;
+import dev.camquevedo.bankInc.Models.v1.Transactions.Transaction;
 import dev.camquevedo.bankInc.Repositories.v1.Transactions.Interfaces.TransactionRepositoryInterface;
 import dev.camquevedo.bankInc.Services.v1.Transactions.Interfaces.TransactionServiceInterface;
 import dev.camquevedo.bankInc.common.APIResponse;
@@ -8,7 +8,7 @@ import dev.camquevedo.bankInc.common.BaseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,7 +81,7 @@ public class TransactionService implements TransactionServiceInterface {
             newTransaction = repository.getReferenceById(id);
             newTransaction.setStatus(body.getStatus());
             newTransaction.setBalance(body.getBalance());
-            newTransaction.setUpdated_at(LocalTime.now());
+            newTransaction.setUpdatedAt(LocalDateTime.now());
 
             newTransaction = repository.save(newTransaction);
         } catch (Throwable e) {

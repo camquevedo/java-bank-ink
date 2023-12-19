@@ -1,6 +1,6 @@
 package dev.camquevedo.bankInc.Services.v1.Transactions.Interfaces;
 
-import dev.camquevedo.bankInc.Models.v1.Transaction;
+import dev.camquevedo.bankInc.Models.v1.Transactions.Transaction;
 import dev.camquevedo.bankInc.common.APIResponse;
 import dev.camquevedo.bankInc.common.BaseException;
 import org.springframework.stereotype.Service;
