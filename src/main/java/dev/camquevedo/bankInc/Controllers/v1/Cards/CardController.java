@@ -187,7 +187,7 @@ public class CardController {
     }
 
     @PostMapping("/card/balance")
-    public APIResponse rechargeBalance(@RequestBody RechargeBalance body) throws BaseException {
+    public APIResponse createTransaction(@RequestBody RechargeBalance body) throws BaseException {
         APIResponse serviceResponse;
         serviceResponse = service.createTransaction(body, true);
 
@@ -201,7 +201,7 @@ public class CardController {
         return new APIResponse(
                 serviceResponse.getStatus(),
                 serviceResponse.getData(),
-                "card.controller.activateCard.NumberCardCreated"
+                "card.controller.createTransaction.transactionCreated"
         );
     }
 }

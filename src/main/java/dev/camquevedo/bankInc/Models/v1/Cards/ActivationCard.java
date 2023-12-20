@@ -10,6 +10,13 @@ public class ActivationCard {
     public long number;
     public String cardId;
 
+    @Override
+    public String toString() {
+        return "Card [number=" + number
+                + ", card_id=" + cardId
+                + "]";
+    }
+
     @JsonCreator
     public ActivationCard(String cardId) {
         this.cardId = cardId;

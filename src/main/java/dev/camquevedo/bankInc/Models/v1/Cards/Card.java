@@ -97,10 +97,10 @@ public class Card {
         return balance;
     }
 
-    public void addBalance(long balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
-    public void setBalance(long incomingBalance) {
+    public void addBalance(long incomingBalance) {
         this.balance += incomingBalance;
     }
     public void removeBalance(long incomingBalance) {
@@ -167,8 +167,8 @@ public class Card {
         return "Card [id=" + id
                 + ", status=" + status
                 + ", product_id=" + productId
-                + ", status=" + number
-                + ", status=" + balance
+                + ", number=" + number
+                + ", balance=" + balance
                 + ", status=" + type
                 + ", first_name=" + firstName
                 + ", last_name=" + lastName

@@ -61,6 +61,9 @@ public class TransactionService implements TransactionServiceInterface {
 
     public APIResponse create(Transaction body) throws BaseException {
         Transaction newTransaction;
+        body.setCreatedAt(LocalDateTime.now());
+        body.setUpdatedAt(LocalDateTime.now());
+
         try {
             newTransaction = repository.save(body);
         } catch (Throwable e) {

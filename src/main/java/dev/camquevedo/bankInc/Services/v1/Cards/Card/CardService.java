@@ -84,15 +84,18 @@ public class CardService implements CardServiceInterface {
             throw new BaseException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     e.getMessage(),
-                    "card.service.getById" + number
+                    "card.service.getByNumber." + number
             );
         }
+
+        if (repositoryResponse.size() == 0)
+            throw new BaseException(
+                    HttpStatus.NOT_FOUND,
+                    "No cards found",
+                    "card.service.getByNumber." + number
+            );
         return new APIResponse().withStatus(HttpStatus.OK)
-//                .withData(repositoryResponse.get(0))
-                .withData(
-                        repositoryResponse.size() == 0
-                        ? null : repositoryResponse.get(0)
-                )
+                .withData( repositoryResponse.get(0) )
                 .withMessage("card.service.getByNumber");
     }
 
@@ -209,16 +212,25 @@ public class CardService implements CardServiceInterface {
                 .withMessage("cards.service.updateCardStatus");
     }
 
-    @Override
     public APIResponse createTransaction(RechargeBalance body, boolean type) throws BaseException {
-        Card response = (Card) this.getByNumber(body.cardId).getData();
-        if (type) response.addBalance(body.balance);
-        response.setBalance(0);
-        response.setUpdatedAt(LocalDateTime.now());
+        Card currentCard = (Card) this.getByNumber(body.cardId).getData();
+        if (type) currentCard.addBalance(body.balance);
+        else currentCard.removeBalance(body.balance);
 
-        Card updated = repository.save(response);
+        APIResponse transactionServiceResponse = transactionService.create(
+                new Transaction(2, type, currentCard.id, body.balance)
+        );
+
+        if (transactionServiceResponse.getStatus() != HttpStatus.CREATED)
+            return new APIResponse().withStatus(HttpStatus.NOT_IMPLEMENTED)
+                    .withData(transactionServiceResponse.getData())
+                    .withMessage("cards.service.createTransaction.notCreated");
+
+        currentCard.setUpdatedAt(LocalDateTime.now());
+        Card updated = repository.save(currentCard);
+
         return new APIResponse().withStatus(HttpStatus.OK)
-                .withData(response)
+                .withData(transactionServiceResponse.getData())
                 .withMessage("cards.service.updateCardStatus");
     }
 
@@ -236,20 +248,5 @@ public class CardService implements CardServiceInterface {
         return new APIResponse().withStatus(HttpStatus.OK)
                 .withData(response)
                 .withMessage("cards.service.updateCardStatus");
-    }
-
-    public APIResponse createTransaction(RechargeBalance entity, Boolean type) throws BaseException {
-        Card cardEntity = (Card) this.getByNumber(entity.cardId).getData();
-
-        Transaction newTransaction = new Transaction();
-        newTransaction.status = 2;
-        newTransaction.type = type;
-        newTransaction.cardId = cardEntity.id;
-        newTransaction.balance = entity.balance;
-        APIResponse transactionServiceResponse = transactionService.create(newTransaction);
-
-        return new APIResponse().withStatus(transactionServiceResponse.getStatus())
-                .withData(transactionServiceResponse.getData())
-                .withMessage("cards.service.createTransaction");
     }
 }

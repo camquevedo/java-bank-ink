@@ -33,6 +33,13 @@ public class Transaction {
         this.balance = balance;
     }
 
+    public Transaction(long status, boolean type, long cardId, long balance) {
+        this.status = status;
+        this.type = type;
+        this.cardId = cardId;
+        this.balance = balance;
+    }
+
     public long getId() {
         return id;
     }
@@ -95,5 +102,15 @@ public class Transaction {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction [id=" + id
+                + ", status=" + status
+                + ", type=" + type
+                + ", card_id=" + cardId
+                + ", balance=" + balance
+                + "]";
     }
 }
