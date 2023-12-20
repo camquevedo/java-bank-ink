@@ -2,12 +2,14 @@ package dev.camquevedo.bankInc.Models.v1;
 
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "products")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
     public String name;
     public long number;
@@ -47,5 +49,13 @@ public class Product {
 
     public void setNumber(long number) {
         this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return "Card [id=" + id
+                + ", name=" + name
+                + ", number=" + number
+                + "]";
     }
 }

@@ -19,3 +19,16 @@ jpa:
   hibernate:
     ddl-auto: update
   show-sql: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enable: true
+    path: /swagger-ui.html
+  pathsToMatch:
+    - /transaction/**
+    - /card/**
+    - /product/**
+    - /status/**
+  show-actuator: false
